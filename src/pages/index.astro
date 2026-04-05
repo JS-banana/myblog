@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+import Pagination from '../components/Pagination.astro';
+
+const PAGE_SIZE = 10;
+
+const allPosts = await getCollection('posts');
+const sorted = allPosts.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const totalPages = Math.ceil(sorted.length / PAGE_SIZE);
+const posts = sorted.slice(0, PAGE_SIZE);
+---
+<BaseLayout title="阿帅油" description="技术、AI、生活">
+  <PostList posts={posts} />
+  <Pagination
+    currentPage={1}
+    totalPages={totalPages}
+    nextUrl={totalPages > 1 ? '/page/2' : undefined}
+  />
+</BaseLayout>

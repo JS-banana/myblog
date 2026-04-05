@@ -1,0 +1,25 @@
+---
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  prevUrl?: string;
+  nextUrl?: string;
+}
+
+const { currentPage, totalPages, prevUrl, nextUrl } = Astro.props;
+---
+{totalPages > 1 && (
+  <nav class="pagination" aria-label="分页">
+    {prevUrl ? (
+      <a href={prevUrl} class="pagination-link">← 较新</a>
+    ) : (
+      <span></span>
+    )}
+    <span class="pagination-info">{currentPage} / {totalPages}</span>
+    {nextUrl ? (
+      <a href={nextUrl} class="pagination-link">较旧 →</a>
+    ) : (
+      <span></span>
+    )}
+  </nav>
+)}

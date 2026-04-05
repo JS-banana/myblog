@@ -1,0 +1,41 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  date: Date;
+  tags?: string[];
+  slug: string;
+}
+
+const { title, description, date, tags = [], slug } = Astro.props;
+const year = date.getFullYear();
+
+function formatDate(d: Date): string {
+  return d.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'Asia/Shanghai',
+  });
+}
+---
+<BaseLayout title={title} description={description} type="article" date={date} slug={slug}>
+  <article>
+    <header class="post-header">
+      <h1>{title}</h1>
+      <div class="post-meta">
+        <time datetime={date.toISOString()}>{formatDate(date)}</time>
+        {tags.length > 0 && (
+          <div class="post-tags">
+            {tags.map((tag) => <span class="post-tag">{tag}</span>)}
+          </div>
+        )}
+      </div>
+    </header>
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

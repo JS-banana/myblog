@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import Pagination from '../../components/Pagination.astro';
+
+export async function getStaticPaths() {
+  const PAGE_SIZE = 10;
+  const allPosts = await getCollection('posts');
+  const sorted = allPosts.sort(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime()
+  );
+
+  const totalPages = Math.ceil(sorted.length / PAGE_SIZE);
+  // 第 1 页由 index.astro 处理，这里从第 2 页开始
+  return Array.from({ length: totalPages - 1 }, (_, i) => {
+    const page = i + 2;
+    const start = (page - 1) * PAGE_SIZE;
+    return {
+      params: { page: String(page) },
+      props: {
+        posts: sorted.slice(start, start + PAGE_SIZE),
+        currentPage: page,
+        totalPages,
+      },
+    };
+  });
+}
+
+const { posts, currentPage, totalPages } = Astro.props;
+---
+<BaseLayout title={`文章 · 第 ${currentPage} 页`}>
+  <PostList posts={posts} />
+  <Pagination
+    currentPage={currentPage}
+    totalPages={totalPages}
+    prevUrl={currentPage === 2 ? '/' : `/page/${currentPage - 1}`}
+    nextUrl={currentPage < totalPages ? `/page/${currentPage + 1}` : undefined}
+  />
+</BaseLayout>

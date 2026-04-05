@@ -1,0 +1,26 @@
+# Context Snapshot — blog-rebuild-plan-review
+
+- Task statement: Review `docs/plans/blog-rebuild-plan.md` for architectural gaps, hidden risks, and missing recommendations before implementation.
+- Desired outcome: A sharper, execution-ready rebuild plan for a personal Astro blog with minimal rework later.
+- Stated solution: Rebuild the old VuePress blog as an Astro site, sync content from a separate `posts` repo via GitHub Actions, and deploy on Vercel.
+- Probable intent hypothesis: The user wants a plan review that catches structural omissions early, especially around long-term maintainability of content sync, URL stability, SEO, and low-friction publishing.
+- Known facts/evidence:
+  - The project is a new blog repo under `/Users/sunss/my-code/myAPP/blog`.
+  - The plan already defines stack, repo boundaries, content sync flow, schema, routes, SEO, dark mode, and rollout phases.
+  - The blog content lives in a separate `posts` repo and only `publish: true` content syncs in.
+  - AI currently generates `slug`, `description`, and `tags`.
+- Constraints:
+  - Keep the site minimal and text-first.
+  - No new JS framework dependence.
+  - New project, but plan should support future automation and content stability.
+- Unknowns/open questions:
+  - Whether the user prioritizes fastest V1 launch or stronger long-term content governance.
+  - Whether AI-generated metadata is allowed to require manual override paths.
+  - Whether redirects need to cover only old VuePress pages or also future slug changes and source moves.
+- Decision-boundary unknowns:
+  - What tradeoffs OMX may decide without confirmation in plan refinement.
+  - How much complexity is acceptable in V1 for sync validation, manual overrides, and observability.
+- Likely codebase touchpoints:
+  - `docs/plans/blog-rebuild-plan.md`
+  - future Astro app skeleton under `src/`, `astro.config.mjs`, `vercel.json`
+  - future sync workflow in `posts/.github/scripts/sync-posts.mjs`
