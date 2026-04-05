@@ -2,6 +2,7 @@ import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import type { APIContext } from 'astro';
+import { SITE } from '@/config/site';
 
 export async function GET(context: APIContext) {
   const posts = await getCollection('posts');
@@ -11,8 +12,8 @@ export async function GET(context: APIContext) {
   );
 
   return rss({
-    title: '阿帅油的博客',
-    description: '技术、AI、生活',
+    title: `${SITE.name}的博客`,
+    description: SITE.description,
     site: context.site!,
     items: sorted.map((post: CollectionEntry<'posts'>) => {
       const year = post.data.date.getFullYear();
@@ -23,6 +24,6 @@ export async function GET(context: APIContext) {
         link: `/posts/${year}/${post.data.slug}/`,
       };
     }),
-    customData: '<language>zh-cn</language>',
+    customData: `<language>${SITE.language}</language>`,
   });
 }

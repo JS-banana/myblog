@@ -18,6 +18,22 @@
 | 图片托管 | Cloudflare R2（免费额度大，全球 CDN） |
 | AI 服务 | 国内大模型（OpenAI SDK 兼容接口），用于生成 slug 和 description |
 
+## 当前阶段边界（local-only）
+
+本计划分成两个阶段，但**当前只执行本地 V1/P0 完成**：
+
+- **当前阶段：local completion**
+  - 只完成博客仓库本地可验证的 V1/P0 基线
+  - 只落地 receiver-side 合同、页面、SEO、文档和本地验证
+  - `src/content/.redirects.json` 在本阶段作为本地 source of truth 和验证依据
+  - `src/content/.slug-cache.json`、样例内容、schema 约定只服务于本地可交付
+- **后续阶段：launch**
+  - 真实域名、部署、GitHub push、远端 `posts` 同步联通
+  - 部署侧 301/redirect 具体落地
+  - 这些都保持后置，不构成本轮完成条件
+
+`docs/plans/blog-rebuild-plan-review.md` 保持为**评审补充记录**，不在本轮被改写成执行计划。
+
 ## 写作时的 Frontmatter（极简）
 
 写文章时只需维护 3 个字段：
@@ -49,8 +65,7 @@ blog/
 ├── vercel.json
 ├── public/
 │   ├── favicon.svg
-│   ├── robots.txt
-│   └── og-default.png
+│   └── og-default.svg
 ├── src/
 │   ├── content/
 │   │   ├── posts/              # 同步脚本写入，按年份子目录
@@ -71,6 +86,7 @@ blog/
 │   │   ├── posts/
 │   │   │   └── [...slug].astro # 文章详情
 │   │   ├── about.astro
+│   │   ├── robots.txt.ts       # robots endpoint（使用占位 site URL 生成）
 │   │   └── rss.xml.ts
 │   ├── components/
 │   │   ├── Head.astro          # SEO（OG, JSON-LD, canonical）
@@ -88,6 +104,23 @@ blog/
 
 ## 内容同步机制
 
+### 当前阶段：receiver-side contract（本地真源）
+
+当前阶段只定义和验证博客仓库这一侧的最小合同，不实现完整远端同步链路：
+
+- `src/content/.slug-cache.json`：slug 的稳定映射来源
+- `src/content/.redirects.json`：本阶段的 redirect source of truth
+- `src/content.config.ts`：只为本地 receiver contract 提供必要 schema；可预留 `updated` / `sourceId`，但不把它们扩展成远端同步实现
+- `src/content/posts/`：放置同步后生成的样例/产物，用于本地证明合同成立
+- `docs/plans/blog-rebuild-v1-checklist.md`：本阶段执行与验收的结构化清单
+
+当前阶段的目标是：**本地能验证、合同能承接、边界能说清**。
+不在本阶段做的事：
+- 不做真实 `posts` 仓库 GitHub Actions 联通
+- 不做生产域名或最终 `site` 值定稿
+- 不做 Vercel / deploy runtime 的 redirect 落地
+- 不做 remote sync engine 或 generalized pipeline
+
 ### 流程
 
 ```
@@ -96,6 +129,8 @@ posts 仓库 push → GitHub Actions → 扫描 publish:true
   → 转换内容 → 清理取消发布的旧文章
   → push 到博客仓库 → Vercel 自动部署
 ```
+
+> 上面的流程属于 **launch 阶段** 目标；当前阶段只要求把 receiver-side 合同、样例内容和本地验证准备好。
 
 ### 同步脚本（posts/.github/scripts/sync-posts.mjs）
 
@@ -137,7 +172,12 @@ posts 仓库 push → GitHub Actions → 扫描 publish:true
 
 ### Redirect Map 与历史链接迁移
 
-维护 `src/content/.redirects.json`，构建时自动生成重定向规则：
+本阶段维护 `src/content/.redirects.json` 作为本地 source of truth。它用于：
+- 承接未来 slug 修正、目录调整、历史 permalink 迁移
+- 让本地检查和样例内容能证明 redirect 关系成立
+- 作为后续 launch 阶段生成部署侧 redirect 的输入
+
+本阶段**不要求**构建时自动生成最终线上重定向规则；那个能力留到 launch 阶段再决定实现路径。
 
 ```json
 {
@@ -149,7 +189,9 @@ posts 仓库 push → GitHub Actions → 扫描 publish:true
 来源：
 - 旧 VuePress `permalink` 字段：同步脚本清理时自动提取并写入
 - Slug 变更：手动修正 slug 时，脚本自动将旧 slug 路径追加到 redirects
-- 构建时由 Astro 中间件或 vercel.json 消费此映射
+- 当前阶段仅验证该映射文件的存在、格式和用法；部署侧消费方式留待 launch 阶段决定
+
+> 说明：在当前阶段，`src/content/.redirects.json` 只作为**本地源真值**和文档/验证依据，不等于部署侧 redirect 已经完成。部署侧规则与真实 301 证明留待后续 launch 阶段。
 
 ### 同步脚本的幂等性、失败保护与可观测性
 
@@ -225,7 +267,7 @@ export const collections = { posts };
 - Head 组件统一管理：Open Graph、Twitter Card、JSON-LD (BlogPosting)
 - **canonical URL**：每篇文章页输出 canonical，避免预览域名/重复路径干扰收录
 - **publishedTime**：来自文章 `date` 字段，输出为 `article:published_time`
-- **OG 图**：站点默认 OG 图（`public/og-default.png`），文章无单独配图时回退到默认
+- **OG 图**：站点默认 OG 图（`public/og-default.svg`），文章无单独配图时回退到默认
 - **Vercel Preview noindex**：非生产域名自动输出 `<meta name="robots" content="noindex">`
 - `@astrojs/sitemap` 自动生成 sitemap
 - `@astrojs/rss` 生成 RSS feed

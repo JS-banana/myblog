@@ -5,12 +5,11 @@ interface Props {
   title: string;
   description?: string;
   date: Date;
+  updated?: Date;
   tags?: string[];
-  slug: string;
 }
 
-const { title, description, date, tags = [], slug } = Astro.props;
-const year = date.getFullYear();
+const { title, description, date, updated, tags = [] } = Astro.props;
 
 function formatDate(d: Date): string {
   return d.toLocaleDateString('zh-CN', {
@@ -21,12 +20,15 @@ function formatDate(d: Date): string {
   });
 }
 ---
-<BaseLayout title={title} description={description} type="article" date={date} slug={slug}>
+<BaseLayout title={title} description={description} type="article" date={date} updated={updated}>
   <article>
     <header class="post-header">
       <h1>{title}</h1>
       <div class="post-meta">
         <time datetime={date.toISOString()}>{formatDate(date)}</time>
+        {updated && (
+          <span class="post-updated">更新于 {formatDate(updated)}</span>
+        )}
         {tags.length > 0 && (
           <div class="post-tags">
             {tags.map((tag) => <span class="post-tag">{tag}</span>)}

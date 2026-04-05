@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="阿帅油">
+  <rect width="1200" height="630" fill="#111111" />
+  <g fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif">
+    <text x="96" y="220" font-size="88" font-weight="700">阿帅油</text>
+    <text x="96" y="330" font-size="38" opacity="0.88">技术、AI、生活</text>
+    <text x="96" y="520" font-size="28" opacity="0.6">Astro · 极简文字流 · Local V1 Baseline</text>
+  </g>
+</svg>

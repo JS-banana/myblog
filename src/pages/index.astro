@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { SITE } from '@/config/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostList from '../components/PostList.astro';
 import Pagination from '../components/Pagination.astro';
@@ -14,7 +15,7 @@ const sorted = allPosts.sort(
 const totalPages = Math.ceil(sorted.length / PAGE_SIZE);
 const posts = sorted.slice(0, PAGE_SIZE);
 ---
-<BaseLayout title="阿帅油" description="技术、AI、生活">
+<BaseLayout title={SITE.name} description={SITE.description}>
   <PostList posts={posts} />
   <Pagination
     currentPage={1}

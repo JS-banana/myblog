@@ -1,8 +1,10 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
+const site = process.env.SITE_URL || 'https://example.com';
+
 export default defineConfig({
-  site: 'https://example.com', // 上线后替换为真实域名
+  site, // 域名尚未定稿，当前阶段允许使用占位值
   integrations: [sitemap()],
   markdown: {
     shikiConfig: {

@@ -198,6 +198,11 @@ img {
   flex-shrink: 0;
 }
 
+.post-updated {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
 /* ===== Post Tags ===== */
 .post-tags {
   display: flex;

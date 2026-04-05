@@ -9,15 +9,15 @@ interface Props {
   description?: string;
   type?: 'website' | 'article';
   date?: Date;
-  slug?: string;
+  updated?: Date;
 }
 
-const { title, description, type, date, slug } = Astro.props;
+const { title, description, type, date, updated } = Astro.props;
 ---
 <!doctype html>
 <html lang="zh-CN">
   <head>
-    <Head title={title} description={description} type={type} date={date} slug={slug} />
+    <Head title={title} description={description} type={type} date={date} updated={updated} />
   </head>
   <body>
     <Header />
