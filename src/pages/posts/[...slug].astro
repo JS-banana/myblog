@@ -1,11 +1,13 @@
 ---
 import { getCollection, render } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
+import { getCanonicalYear } from '@/utils/postYear';
+import { estimateReadingMinutes } from '@/utils/readingTime';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
   return posts.map((post) => {
-    const year = post.data.date.getFullYear();
+    const year = getCanonicalYear(post);
     return {
       params: { slug: `${year}/${post.data.slug}` },
       props: { post },
@@ -15,6 +17,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const readingMinutes = estimateReadingMinutes(post.body ?? '');
 ---
 <PostLayout
   title={post.data.title}
@@ -22,6 +25,7 @@ const { Content } = await render(post);
   date={post.data.date}
   updated={post.data.updated}
   tags={post.data.tags}
+  readingMinutes={readingMinutes}
 >
   <Content />
 </PostLayout>
