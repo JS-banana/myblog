@@ -1,0 +1,23 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getAllTags, tagToSlug } from '@/utils/tags';
+
+const tags = await getAllTags();
+---
+<BaseLayout title="标签 · 所有主题">
+  <h1 style="font-size:1.5rem;font-weight:700;margin-bottom:var(--space-md);letter-spacing:-0.02em;">标签</h1>
+  <p class="muted" style="margin-bottom:var(--space-lg);">共 {tags.length} 个主题，按使用频次排序</p>
+  {tags.length === 0 ? (
+    <p class="muted">暂无标签</p>
+  ) : (
+    <ul class="tag-cloud">
+      {tags.map(({ tag, count }) => (
+        <li>
+          <a href={`/tags/${tagToSlug(tag)}`} class="pill">
+            {tag} <span class="tag-count">·{count}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</BaseLayout>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import { tagToSlug } from '@/utils/tags';
 
 interface Props {
   title: string;
@@ -31,7 +32,9 @@ function formatDate(d: Date): string {
         )}
         {tags.length > 0 && (
           <div class="post-tags">
-            {tags.map((tag) => <span class="post-tag">{tag}</span>)}
+            {tags.map((tag) => (
+              <a href={`/tags/${tagToSlug(tag)}`} class="pill">{tag}</a>
+            ))}
           </div>
         )}
       </div>

@@ -493,6 +493,10 @@ img {
   font-variant-numeric: tabular-nums;
 }
 
+/* ===== Tag Cloud ===== */
+.tag-cloud { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+.tag-count { color: var(--color-text-tertiary); margin-left: 0.2rem; }
+
 /* ===== Responsive ===== */
 @media (max-width: 720px) {
   :root {
