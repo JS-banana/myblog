@@ -26,6 +26,7 @@ const readingMinutes = estimateReadingMinutes(post.body ?? '');
   updated={post.data.updated}
   tags={post.data.tags}
   readingMinutes={readingMinutes}
+  postId={post.id}
 >
   <Content />
 </PostLayout>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { tagToSlug } from '@/utils/tags';
+import { getAdjacentPosts, postHref } from '@/utils/adjacent';
 
 interface Props {
   title: string;
@@ -9,9 +10,11 @@ interface Props {
   updated?: Date;
   tags?: string[];
   readingMinutes?: number;
+  postId?: string;
 }
 
-const { title, description, date, updated, tags = [], readingMinutes } = Astro.props;
+const { title, description, date, updated, tags = [], readingMinutes, postId } = Astro.props;
+const { prev, next } = postId ? await getAdjacentPosts(postId) : { prev: null, next: null };
 
 function formatDate(d: Date): string {
   return d.toLocaleDateString('zh-CN', {
@@ -42,5 +45,15 @@ function formatDate(d: Date): string {
     <div class="prose">
       <slot />
     </div>
+    {(prev || next) && (
+      <nav class="post-nav" aria-label="上下篇导航">
+        {prev
+          ? <a href={postHref(prev)} class="post-nav-prev">← {prev.data.title}</a>
+          : <span />}
+        {next
+          ? <a href={postHref(next)} class="post-nav-next">{next.data.title} →</a>
+          : <span />}
+      </nav>
+    )}
   </article>
 </BaseLayout>

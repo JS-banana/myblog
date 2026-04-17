@@ -493,6 +493,20 @@ img {
   font-variant-numeric: tabular-nums;
 }
 
+/* ===== Post Nav (prev/next) ===== */
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--font-size-small);
+}
+.post-nav a { color: var(--color-text-secondary); text-decoration: none; max-width: 45%; }
+.post-nav a:hover { color: var(--color-accent); text-decoration: none; }
+.post-nav-next { text-align: right; }
+
 /* ===== Tag Cloud ===== */
 .tag-cloud { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-sm); }
 .tag-count { color: var(--color-text-tertiary); margin-left: 0.2rem; }
