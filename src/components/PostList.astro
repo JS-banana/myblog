@@ -1,5 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { fromDescriptionOrBody } from '@/utils/excerpt';
+import { getCanonicalYear } from '@/utils/postYear';
 
 interface Props {
   posts: CollectionEntry<'posts'>[];
@@ -18,16 +20,22 @@ function formatDate(date: Date): string {
 ---
 <ul class="post-list">
   {posts.map((post) => {
-    const year = post.data.date.getFullYear();
+    const year = getCanonicalYear(post);
     const href = `/posts/${year}/${post.data.slug}`;
+    const excerpt = fromDescriptionOrBody({
+      description: post.data.description,
+      body: post.body,
+      maxLength: 120,
+    });
     return (
       <li class="post-item">
-        <span class="post-title">
-          <a href={href}>{post.data.title}</a>
-        </span>
-        <time class="post-date" datetime={post.data.date.toISOString()}>
-          {formatDate(post.data.date)}
-        </time>
+        <a href={href} class="post-link">
+          <h3 class="post-title">{post.data.title}</h3>
+          <time class="post-date" datetime={post.data.date.toISOString()}>
+            {formatDate(post.data.date)}
+          </time>
+          {excerpt && <p class="post-excerpt">{excerpt}</p>}
+        </a>
       </li>
     );
   })}
