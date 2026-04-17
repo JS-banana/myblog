@@ -512,6 +512,21 @@ img {
   font-variant-numeric: tabular-nums;
 }
 
+/* ===== Heading Anchors ===== */
+.prose h2, .prose h3, .prose h4 { position: relative; }
+.heading-anchor {
+  margin-left: 0.4rem;
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 120ms, color 120ms;
+  font-weight: 400;
+}
+.prose h2:hover .heading-anchor,
+.prose h3:hover .heading-anchor,
+.prose h4:hover .heading-anchor { opacity: 1; }
+.heading-anchor:hover { color: var(--color-accent); }
+
 /* ===== Post Nav (prev/next) ===== */
 .post-nav {
   display: flex;
