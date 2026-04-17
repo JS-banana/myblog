@@ -1,12 +1,29 @@
 ---
-import { SITE } from '@/config/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="关于" description={`关于${SITE.name}`}>
-  <div class="about-content prose">
+<BaseLayout title="关于 · sunss">
+  <article class="prose">
     <h1>关于</h1>
-    <p>Hi，我是{SITE.author}。</p>
-    <p>前端工程师，喜欢探索 AI、写作和技术。</p>
-    <p>这里记录我的技术思考、AI 实践和一些生活感悟。</p>
-  </div>
+    <!-- TODO(user): 替换为一句话自介，例：一个在某某领域写代码的人，这里记录我正在学和想清楚的事 -->
+    <p>一个在 __领域__ 写代码的人，这里记录我正在学和想清楚的事 ✨</p>
+
+    <h2>联系</h2>
+    <ul>
+      <li>📮 Email · <a href="mailto:your@email.com"><!-- TODO -->your@email.com</a></li>
+      <li>🐙 GitHub · <a href="https://github.com/sunss" rel="me">@sunss</a></li>
+      <li>📡 <a href="/rss.xml">RSS</a></li>
+    </ul>
+
+    <h2>最近在关注</h2>
+    <ul>
+      <!-- TODO(user): 替换为 3-5 个当前关注点，风格：简洁短句 -->
+      <li>__技术 A__ 的设计哲学</li>
+      <li>__话题 B__ 的实践</li>
+      <li>__工具 C__ 的工作流</li>
+    </ul>
+
+    <h2>为什么写这个博客</h2>
+    <!-- TODO(user): 120-200 字，写动机/态度/想达到的状态 -->
+    <p>我写博客是为了 __原因__。</p>
+  </article>
 </BaseLayout>
