@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="404 · 走丢了">
+  <div class="notfound">
+    <h1>走丢了 ✨</h1>
+    <p class="muted">这条路径没有对应的内容。</p>
+    <p><a href="/">← 回首页</a> · <a href="/archives">看看归档</a></p>
+  </div>
+</BaseLayout>
+
+<style>
+  .notfound { text-align: center; padding: var(--space-xl) 0; }
+  .notfound h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: var(--space-md); }
+  .notfound p { margin-bottom: var(--space-sm); }
+</style>

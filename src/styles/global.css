@@ -549,6 +549,7 @@ img {
 @media (max-width: 720px) {
   :root {
     --nav-height: 48px;
+    --space-xl: 2.5rem;
   }
 
   .post-item {
@@ -574,4 +575,13 @@ img {
     align-items: flex-start;
     gap: 0.2rem;
   }
+}
+
+@media (max-width: 480px) {
+  :root { --font-size-base: 16px; }
+  .site-nav { height: 48px; gap: var(--space-sm); }
+  .nav-links { gap: var(--space-sm); }
+  .post-excerpt { -webkit-line-clamp: 3; }
+  .post-nav { flex-direction: column; gap: var(--space-sm); }
+  .post-nav a { max-width: 100%; }
 }
