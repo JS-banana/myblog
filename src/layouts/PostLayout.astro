@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import { tagToSlug } from '@/utils/tags';
 import { getAdjacentPosts, postHref } from '@/utils/adjacent';
+import CodeCopyScript from '@/components/CodeCopyScript.astro';
 
 interface Props {
   title: string;
@@ -56,4 +57,5 @@ function formatDate(d: Date): string {
       </nav>
     )}
   </article>
+  <CodeCopyScript />
 </BaseLayout>
