@@ -1,0 +1,249 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '@/config/site';
+import { getCanonicalYear } from '@/utils/postYear';
+
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+// Build year → month → posts tree
+type Post = (typeof sortedPosts)[0];
+type MonthGroup = { monthKey: string; label: string; posts: Post[] };
+type YearGroup = { year: number; months: MonthGroup[]; total: number };
+
+const yearMap = new Map<number, Map<string, Post[]>>();
+
+for (const post of sortedPosts) {
+  const year = getCanonicalYear(post);
+  const d = new Date(post.data.date);
+  const monthKey = `${year}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+
+  if (!yearMap.has(year)) yearMap.set(year, new Map());
+  const monthMap = yearMap.get(year)!;
+  if (!monthMap.has(monthKey)) monthMap.set(monthKey, []);
+  monthMap.get(monthKey)!.push(post);
+}
+
+const groups: YearGroup[] = Array.from(yearMap.entries())
+  .sort((a, b) => b[0] - a[0])
+  .map(([year, monthMap]) => {
+    const months: MonthGroup[] = Array.from(monthMap.entries())
+      .sort((a, b) => b[0].localeCompare(a[0]))
+      .map(([monthKey, posts]) => {
+        const [, m] = monthKey.split('-');
+        return { monthKey, label: `${parseInt(m)} 月`, posts };
+      });
+    return { year, months, total: months.reduce((s, m) => s + m.posts.length, 0) };
+  });
+
+const years = groups.map((g) => g.year);
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('zh-CN', {
+    month: '2-digit',
+    day: '2-digit',
+    timeZone: 'Asia/Shanghai',
+  });
+}
+---
+<BaseLayout title="归档" description={`按年份查看 ${SITE.name} 的文章归档`}>
+  <!-- Mobile year selector -->
+  <div class="archives-mobile-nav">
+    <select id="year-jump" aria-label="跳转到年份">
+      {years.map((y) => <option value={`#year-${y}`}>{y} 年</option>)}
+    </select>
+  </div>
+
+  <div class="archives-layout">
+    <!-- PC sidebar -->
+    <nav class="archives-sidebar" aria-label="年份导航">
+      <ul>
+        {groups.map(({ year, total }) => (
+          <li>
+            <a href={`#year-${year}`} class="sidebar-year-link">
+              {year}
+              <span class="sidebar-count">{total}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Main content -->
+    <section class="archives-main">
+      <h1 class="archives-title">归档</h1>
+      {groups.map(({ year, months, total }) => (
+        <section class="archive-year-group" id={`year-${year}`}>
+          <h2 class="archive-year-heading">
+            <a href={`#year-${year}`} class="archive-year-anchor">{year}</a>
+            <span class="archive-year-count">{total} 篇</span>
+          </h2>
+          {months.map(({ monthKey, label, posts }) => (
+            <section class="archive-month-group" id={monthKey}>
+              <h3 class="archive-month-heading">{label}</h3>
+              <ul class="archive-list">
+                {posts.map((post) => {
+                  const href = `/posts/${year}/${post.data.slug}`;
+                  return (
+                    <li class="archive-item">
+                      <a class="archive-link" href={href}>{post.data.title}</a>
+                      <time class="archive-date" datetime={post.data.date.toISOString()}>
+                        {formatDate(post.data.date)}
+                      </time>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          ))}
+        </section>
+      ))}
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const sel = document.getElementById('year-jump') as HTMLSelectElement | null;
+  sel?.addEventListener('change', () => {
+    const target = document.querySelector(sel.value);
+    target?.scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+
+<style>
+  .archives-mobile-nav {
+    display: none;
+    margin-bottom: var(--space-md);
+  }
+  .archives-mobile-nav select {
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: var(--font-size-small);
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .archives-layout {
+    display: flex;
+    gap: var(--space-xl);
+    align-items: flex-start;
+  }
+
+  .archives-sidebar {
+    width: 80px;
+    flex-shrink: 0;
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-lg));
+  }
+  .archives-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .sidebar-year-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: var(--font-size-small);
+    padding: 0.2rem 0;
+    transition: color 120ms;
+  }
+  .sidebar-year-link:hover { color: var(--color-accent); }
+  .sidebar-count {
+    font-size: 0.75rem;
+    color: var(--color-text-tertiary);
+  }
+
+  .archives-main { flex: 1; min-width: 0; }
+
+  .archives-title {
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-title);
+    margin: 0 0 var(--space-lg);
+    color: var(--color-text);
+  }
+
+  .archive-year-group { margin-bottom: var(--space-xl); }
+
+  .archive-year-heading {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    font-size: 1rem;
+    font-weight: var(--font-weight-title);
+    color: var(--color-text);
+    margin: 0 0 var(--space-md);
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .archive-year-anchor {
+    color: inherit;
+    text-decoration: none;
+  }
+  .archive-year-anchor:hover { color: var(--color-accent); }
+  .archive-year-count {
+    font-size: var(--font-size-small);
+    font-weight: 400;
+    color: var(--color-text-tertiary);
+  }
+
+  .archive-month-group { margin-bottom: var(--space-md); }
+
+  .archive-month-heading {
+    font-size: var(--font-size-small);
+    font-weight: 500;
+    color: var(--color-text-tertiary);
+    margin: 0 0 var(--space-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .archive-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .archive-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-sm);
+    padding: 0.3rem 0;
+  }
+  .archive-link {
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 120ms;
+  }
+  .archive-link:hover { color: var(--color-accent); }
+  .archive-date {
+    font-size: var(--font-size-small);
+    color: var(--color-text-tertiary);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .archives-mobile-nav { display: block; }
+    .archives-sidebar { display: none; }
+    .archives-layout { display: block; }
+  }
+</style>
