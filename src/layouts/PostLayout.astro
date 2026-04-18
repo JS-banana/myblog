@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import { tagToSlug } from '@/utils/tags';
 import { getAdjacentPosts, postHref } from '@/utils/adjacent';
 import CodeCopyScript from '@/components/CodeCopyScript.astro';
+import ReadingProgress from '@/components/ReadingProgress.astro';
 
 interface Props {
   title: string;
@@ -28,6 +29,7 @@ function formatDate(d: Date): string {
 }
 ---
 <BaseLayout title={title} description={description} type="article" date={date} updated={updated}>
+  <ReadingProgress />
   <article>
     <header class="post-header">
       <h1 transition:name={slug ? `title-${slug}` : undefined}>{title}</h1>
