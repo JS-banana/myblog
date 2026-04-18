@@ -30,7 +30,7 @@ function formatDate(date: Date): string {
     return (
       <li class="post-item">
         <a href={href} class="post-link">
-          <h3 class="post-title">{post.data.title}</h3>
+          <h3 class="post-title" transition:name={`title-${post.data.slug}`}>{post.data.title}</h3>
           <time class="post-date" datetime={post.data.date.toISOString()}>
             {formatDate(post.data.date)}
           </time>

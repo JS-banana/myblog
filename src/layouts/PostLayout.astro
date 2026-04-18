@@ -12,9 +12,10 @@ interface Props {
   tags?: string[];
   readingMinutes?: number;
   postId?: string;
+  slug?: string;
 }
 
-const { title, description, date, updated, tags = [], readingMinutes, postId } = Astro.props;
+const { title, description, date, updated, tags = [], readingMinutes, postId, slug } = Astro.props;
 const { prev, next } = postId ? await getAdjacentPosts(postId) : { prev: null, next: null };
 
 function formatDate(d: Date): string {
@@ -29,7 +30,7 @@ function formatDate(d: Date): string {
 <BaseLayout title={title} description={description} type="article" date={date} updated={updated}>
   <article>
     <header class="post-header">
-      <h1>{title}</h1>
+      <h1 transition:name={slug ? `title-${slug}` : undefined}>{title}</h1>
       <p class="post-meta">
         <time datetime={date.toISOString()}>{formatDate(date)}</time>
         {readingMinutes && <span>· {readingMinutes} 分钟</span>}

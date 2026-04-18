@@ -5,20 +5,22 @@
 </button>
 
 <script>
-  function updateIcon(theme: string) {
+  function initThemeToggle() {
     const icon = document.getElementById('theme-icon');
-    if (!icon) return;
-    icon.textContent = theme === 'dark' ? '☀' : '☽';
+    const btn = document.getElementById('theme-toggle');
+    if (!icon || !btn) return;
+
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    icon.textContent = current === 'dark' ? '☀' : '☽';
+
+    btn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      icon.textContent = next === 'dark' ? '☀' : '☽';
+    });
   }
 
-  const btn = document.getElementById('theme-toggle');
-  const current = document.documentElement.getAttribute('data-theme') || 'light';
-  updateIcon(current);
-
-  btn?.addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    updateIcon(next);
-  });
+  initThemeToggle();
+  document.addEventListener('astro:page-load', initThemeToggle);
 </script>
