@@ -8,6 +8,13 @@ const site = process.env.SITE_URL || 'https://example.com';
 export default defineConfig({
   site,
   integrations: [sitemap()],
+  vite: {
+    build: {
+      rollupOptions: {
+        external: ['/pagefind/pagefind.js'],
+      },
+    },
+  },
   markdown: {
     shikiConfig: {
       theme: 'css-variables',

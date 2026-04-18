@@ -1,6 +1,7 @@
 ---
 import { SITE } from '@/config/site';
 import ThemeToggle from './ThemeToggle.astro';
+import SearchDialog from './SearchDialog.astro';
 
 const pathname = Astro.url.pathname;
 const isActive = (prefix: string) =>
@@ -27,6 +28,7 @@ const links = [
         </li>
       ))}
     </ul>
+    <SearchDialog />
     <ThemeToggle />
   </nav>
 </header>

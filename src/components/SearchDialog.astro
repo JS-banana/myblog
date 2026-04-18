@@ -1,0 +1,94 @@
+---
+---
+<button class="search-btn" id="search-open" aria-label="搜索文章">🔍</button>
+
+<dialog class="search-dialog" id="search-dialog" aria-label="搜索">
+  <div class="search-inner">
+    <div class="search-header">
+      <input
+        class="search-input"
+        id="search-input"
+        type="search"
+        placeholder="搜索文章…"
+        autocomplete="off"
+        autofocus
+      />
+      <button class="search-close" id="search-close" aria-label="关闭搜索">✕</button>
+    </div>
+    <div class="search-results" id="search-results" role="list" aria-live="polite"></div>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.getElementById('search-dialog') as HTMLDialogElement;
+  const input = document.getElementById('search-input') as HTMLInputElement;
+  const results = document.getElementById('search-results') as HTMLDivElement;
+  const openBtn = document.getElementById('search-open') as HTMLButtonElement;
+  const closeBtn = document.getElementById('search-close') as HTMLButtonElement;
+
+  let pagefind: any = null;
+
+  async function loadPagefind() {
+    if (pagefind) return;
+    try {
+      // pagefind.js is generated post-build, vite-ignore prevents rollup from resolving it
+      pagefind = await import(/* @vite-ignore */ '/pagefind/pagefind.js');
+      await pagefind.init();
+    } catch {
+      pagefind = null;
+    }
+  }
+
+  function openDialog() {
+    dialog.showModal();
+    input.focus();
+    loadPagefind();
+  }
+
+  function closeDialog() {
+    dialog.close();
+    results.innerHTML = '';
+    input.value = '';
+  }
+
+  openBtn.addEventListener('click', openDialog);
+  closeBtn.addEventListener('click', closeDialog);
+
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) closeDialog();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && !dialog.open && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'TEXTAREA') {
+      e.preventDefault();
+      openDialog();
+    }
+    if (e.key === 'Escape' && dialog.open) {
+      closeDialog();
+    }
+  });
+
+  let debounceTimer: ReturnType<typeof setTimeout>;
+  input.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(async () => {
+      const q = input.value.trim();
+      if (!q || !pagefind) {
+        results.innerHTML = q && !pagefind ? '<p class="search-empty">搜索暂不可用（仅生产环境）</p>' : '';
+        return;
+      }
+      const { results: hits } = await pagefind.search(q);
+      if (!hits.length) {
+        results.innerHTML = '<p class="search-empty">没有找到相关文章</p>';
+        return;
+      }
+      const items = await Promise.all(hits.slice(0, 8).map((h: any) => h.data()));
+      results.innerHTML = items.map((item: any) => `
+        <a class="search-item" href="${item.url}" role="listitem">
+          <span class="search-item-title">${item.meta?.title ?? '无标题'}</span>
+          ${item.excerpt ? `<span class="search-item-excerpt">${item.excerpt}</span>` : ''}
+        </a>
+      `).join('');
+    }, 200);
+  });
+</script>
