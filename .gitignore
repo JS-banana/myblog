@@ -6,3 +6,6 @@ node_modules/
 .DS_Store
 .astro/
 .omx/
+.claude/
+.agents/
+skills-lock.json
