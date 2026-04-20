@@ -2,6 +2,8 @@
 
 > 来源：https://github.com/satnaing/astro-paper (4400+ stars, MIT)
 > 用途：后续迭代的功能参考和实现思路，不直接使用其代码
+>
+> 说明：本文件是功能灵感清单；源码级验证结论见 `docs/plans/reference-study-tw93-astropaper-source.md`。
 
 ## 1. 动态 OG 图生成
 

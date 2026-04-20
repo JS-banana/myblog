@@ -3,10 +3,11 @@ import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import type { APIContext } from 'astro';
 import { SITE } from '@/config/site';
+import { getCanonicalYear } from '@/utils/postYear';
 
 export async function GET(context: APIContext) {
   const posts = await getCollection('posts');
-  const sorted = posts.sort(
+  const sortedPosts = posts.sort(
     (a: CollectionEntry<'posts'>, b: CollectionEntry<'posts'>) =>
       b.data.date.getTime() - a.data.date.getTime()
   );
@@ -15,8 +16,8 @@ export async function GET(context: APIContext) {
     title: `${SITE.name}的博客`,
     description: SITE.description,
     site: context.site!,
-    items: sorted.map((post: CollectionEntry<'posts'>) => {
-      const year = post.data.date.getFullYear();
+    items: sortedPosts.map((post) => {
+      const year = getCanonicalYear(post);
       return {
         title: post.data.title,
         pubDate: post.data.date,
