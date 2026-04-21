@@ -3,47 +3,5 @@
     "slug": "hello-world",
     "title": "Hello World",
     "year": "2024"
-  },
-  "blog/2024/JavaScript之new的执行过程.md": {
-    "slug": "javascript-new-operator-execution-process",
-    "title": "JavaScript进阶—— new 的执行过程",
-    "year": "2024",
-    "description": "深入解析JavaScript中new关键字的执行过程，包括创建对象、原型链绑定和构造函数调用等核心步骤，帮助开发者理解对象实例化的底层原理。",
-    "tags": ["JavaScript"]
-  },
-  "blog/2024/JavaScript进阶之map与reduce的前世今生.md": {
-    "slug": "javascript-map-reduce-implementation-guide",
-    "title": "JavaScript进阶——map与reduce的前世今生😋",
-    "year": "2024",
-    "description": "深入解析JavaScript中map与reduce方法的原理、区别及手写实现，帮助开发者掌握函数式编程核心概念，提升面试准备和实际编码能力。",
-    "tags": ["JavaScript"]
-  },
-  "blog/2024/从输入 URL 到页面加载完成发生了什么？.md": {
-    "slug": "url-to-page-load-process",
-    "title": "从输入 URL 到页面加载完成发生了什么？",
-    "year": "2024",
-    "description": "详解从输入URL到页面加载完成的完整流程，涵盖DNS解析、TCP连接、HTTP请求、浏览器渲染等核心技术环节，帮助开发者深入理解前端性能优化原理。",
-    "tags": ["浏览器"]
-  },
-  "blog/2024/作用域与闭包.md": {
-    "slug": "javascript-scope-closure-guide",
-    "title": "作用域与闭包",
-    "year": "2024",
-    "description": "深入解析JavaScript中的作用域与闭包，涵盖作用域链、闭包原理及面试常见问题，帮助开发者掌握核心概念并提升代码质量。",
-    "tags": ["JavaScript"]
-  },
-  "blog/2024/执行上下文.md": {
-    "slug": "javascript-execution-context-explained",
-    "title": "执行上下文",
-    "year": "2024",
-    "description": "深入解析JavaScript执行上下文，包括全局、函数和Eval三种类型，帮助理解闭包和作用域链的基础概念。",
-    "tags": ["JavaScript"]
-  },
-  "blog/2024/说说call、apply、bind是如何改变this的.md": {
-    "slug": "javascript-call-apply-bind-this-binding",
-    "title": "说说call、apply、bind是如何改变this的",
-    "year": "2024",
-    "description": "深入解析JavaScript中call、apply、bind方法如何显式改变函数this指向，包括手写实现原理和面试常见考点。",
-    "tags": ["JavaScript"]
   }
 }
