@@ -8,7 +8,7 @@ const posts = defineCollection({
     date: z.coerce.date(),
     updated: z.coerce.date().optional(),
     description: z.string().default(''),
-    tags: z.array(z.string()).default([]),
+    tags: z.array(z.string().nullable()).transform(arr => arr.filter((t): t is string => t !== null)).default([]),
     slug: z.string(),
     source: z.enum(['blog', 'wechat', 'year-in-review', 'me', 'story']).optional(),
     sourcePath: z.string().optional(),
