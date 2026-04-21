@@ -1,7 +1,7 @@
 ---
 title: JavaScript进阶—— new 的执行过程
 date: '2024-03-26'
-description: 深入解析JavaScript中new关键字的执行过程，包括创建对象、原型链绑定和构造函数调用等核心步骤，帮助开发者理解对象实例化原理。
+description: 深入解析JavaScript中new关键字的执行过程，包括创建对象、原型链绑定和构造函数调用等核心步骤，帮助开发者理解对象实例化的底层原理。
 tags:
   - JavaScript
 slug: javascript-new-operator-execution-process

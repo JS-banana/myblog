@@ -1,7 +1,7 @@
 ---
 title: 作用域与闭包
 date: '2024-03-21'
-description: 深入解析JavaScript作用域与闭包，涵盖全局作用域、函数作用域及作用域链，帮助开发者掌握闭包原理与面试要点。
+description: 深入解析JavaScript中的作用域与闭包，涵盖作用域链、闭包原理及面试常见问题，帮助开发者掌握核心概念并提升代码质量。
 tags:
   - JavaScript
 slug: javascript-scope-closure-guide
