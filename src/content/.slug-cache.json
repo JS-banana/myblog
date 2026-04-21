@@ -3,5 +3,18 @@
     "slug": "hello-world",
     "title": "Hello World",
     "year": "2024"
+  },
+  "blog/2026/from-tauri-to-electron-amberkeeper.md": {
+    "slug": "tauri-to-electron-ai-chat-backup",
+    "title": "为了把 AI 对话留给自己，我把 7MB 的 Tauri 应用重写成了 Electron",
+    "year": "2026",
+    "description": "本文分享将7MB的Tauri应用重写为Electron的经历，旨在解决AI对话备份难题，保护用户与ChatGPT等AI的珍贵对话记录。",
+    "tags": [
+      "Tauri",
+      "Electron",
+      "AI对话备份",
+      "桌面应用开发",
+      "跨平台开发"
+    ]
   }
 }
