@@ -3,5 +3,35 @@
     "slug": "hello-world",
     "title": "Hello World",
     "year": "2024"
+  },
+  "blog/2024/JavaScript之new的执行过程.md": {
+    "slug": "javascript-new-operator-execution-process",
+    "title": "JavaScript进阶—— new 的执行过程",
+    "year": "2024"
+  },
+  "blog/2024/JavaScript进阶之map与reduce的前世今生.md": {
+    "slug": "javascript-map-reduce-implementation-guide",
+    "title": "JavaScript进阶——map与reduce的前世今生😋",
+    "year": "2024"
+  },
+  "blog/2024/从输入 URL 到页面加载完成发生了什么？.md": {
+    "slug": "url-to-page-load-process",
+    "title": "从输入 URL 到页面加载完成发生了什么？",
+    "year": "2024"
+  },
+  "blog/2024/作用域与闭包.md": {
+    "slug": "javascript-scope-closure-guide",
+    "title": "作用域与闭包",
+    "year": "2024"
+  },
+  "blog/2024/执行上下文.md": {
+    "slug": "javascript-execution-context-explained",
+    "title": "执行上下文",
+    "year": "2024"
+  },
+  "blog/2024/说说call、apply、bind是如何改变this的.md": {
+    "slug": "javascript-call-apply-bind-this-binding",
+    "title": "说说call、apply、bind是如何改变this的",
+    "year": "2024"
   }
 }
