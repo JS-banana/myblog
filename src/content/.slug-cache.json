@@ -16,5 +16,31 @@
       "桌面应用开发",
       "跨平台开发"
     ]
+  },
+  "wechat/你问我OpenClaw和ClaudeCode有什么区别.md": {
+    "slug": "openclaw-vs-claude-code-differences",
+    "title": "你问我 OpenClaw 和 Claude Code 有什么区别",
+    "year": "2026",
+    "description": "深入对比 OpenClaw 与 Claude Code 的区别，解析两者在集成方式、工作流和适用场景上的核心差异，帮助技术团队选择最适合的 AI 工具。",
+    "tags": [
+      "OpenClaw",
+      "Claude Code",
+      "AI工具对比",
+      "技术博客",
+      "工作流"
+    ]
+  },
+  "wechat/同事问我你代码都让AI写那我们开发的意义是什么呢.md": {
+    "slug": "ai-writing-code-developer-meaning",
+    "title": "同事问我你代码都让 AI 写那我们开发的意义是什么呢？",
+    "year": "2026",
+    "description": "当AI能写代码时，开发者的价值何在？本文探讨AI辅助编程下，开发者的核心能力从手写代码转向需求理解、架构设计与问题解决，重新定义开发的意义。",
+    "tags": [
+      "AI编程",
+      "开发者价值",
+      "技术思考",
+      "人机协作",
+      "职业发展"
+    ]
   }
 }
