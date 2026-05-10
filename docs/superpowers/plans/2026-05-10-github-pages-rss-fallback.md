@@ -59,6 +59,8 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Install dependencies
         run: npm ci
@@ -85,7 +87,7 @@ jobs:
         uses: actions/deploy-pages@v4
 ```
 
-Expected: Workflow publishes `dist` to Pages without changing project config.
+Expected: Workflow enables GitHub Pages if needed and publishes `dist` to Pages without changing project config.
 
 - [ ] **Step 3: Commit workflow**
 
