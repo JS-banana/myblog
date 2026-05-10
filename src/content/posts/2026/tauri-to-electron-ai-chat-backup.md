@@ -1,6 +1,6 @@
 ---
 title: 我做了两个工具，一个 7MB 的壳，一个会记住的壳
-date: '2026-01-15'
+date: '2026-05-05'
 description: 本文分享将7MB的Tauri应用重写为Electron的经历，旨在解决AI对话备份难题，保护用户与ChatGPT等AI的珍贵对话记录。
 tags:
   - Tauri
