@@ -1,23 +1,24 @@
 ---
 ---
 <button id="theme-toggle" class="theme-toggle" aria-label="切换主题" title="切换主题">
-  <span id="theme-icon" class="theme-icon">☽</span>
+  <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M20 15.4A8.5 8.5 0 0 1 8.6 4a7.5 7.5 0 1 0 11.4 11.4Z"></path>
+  </svg>
+  <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2.4v2.2M12 19.4v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.4 12h2.2M19.4 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"></path>
+  </svg>
 </button>
 
 <script>
   function initThemeToggle() {
-    const icon = document.getElementById('theme-icon');
     const btn = document.getElementById('theme-toggle');
-    if (!icon || !btn) return;
-
-    const current = document.documentElement.getAttribute('data-theme') || 'light';
-    icon.textContent = current === 'dark' ? '☀' : '☽';
+    if (!btn) return;
 
     btn.addEventListener('click', () => {
       const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
-      icon.textContent = next === 'dark' ? '☀' : '☽';
     });
   }
 

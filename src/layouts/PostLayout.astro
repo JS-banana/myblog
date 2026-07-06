@@ -20,23 +20,25 @@ const { title, description, date, updated, tags = [], readingMinutes, postId, sl
 const { prev, next } = postId ? await getAdjacentPosts(postId) : { prev: null, next: null };
 
 function formatDate(d: Date): string {
-  return d.toLocaleDateString('zh-CN', {
+  const parts = new Intl.DateTimeFormat('zh-CN', {
     year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
     timeZone: 'Asia/Shanghai',
-  });
+  }).formatToParts(d);
+  const get = (type: string) => parts.find((part) => part.type === type)?.value ?? '';
+  return `${get('year')}-${get('month')}-${get('day')}`;
 }
 ---
 <BaseLayout title={title} description={description} type="article" date={date} updated={updated}>
   <ReadingProgress />
-  <article>
+  <article class="post-article">
     <header class="post-header">
       <h1 transition:name={slug ? `title-${slug}` : undefined}>{title}</h1>
       <p class="post-meta">
         <time datetime={date.toISOString()}>{formatDate(date)}</time>
-        {readingMinutes && <span>· {readingMinutes} 分钟</span>}
-        {updated && <span class="post-updated">· 更新于 {formatDate(updated)}</span>}
+        {readingMinutes && <span>{readingMinutes} 分钟阅读</span>}
+        {updated && <span class="post-updated">更新于 {formatDate(updated)}</span>}
       </p>
       {tags.length > 0 && (
         <div class="post-tags">
@@ -45,6 +47,7 @@ function formatDate(d: Date): string {
           ))}
         </div>
       )}
+      {description && <p class="post-description">{description}</p>}
     </header>
     <div class="prose">
       <slot />

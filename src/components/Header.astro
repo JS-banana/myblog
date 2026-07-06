@@ -16,18 +16,19 @@ const links = [
 ---
 <header class="site-header">
   <nav class="site-nav">
-    <a href="/" class="site-title">{SITE.name}</a>
+    <a href="/" class="site-title" aria-label={`${SITE.name} 首页`}>
+      <span>{SITE.name}</span>
+      <span class="site-title-separator">/</span>
+      <span class="site-title-roman">{SITE.romanName}</span>
+    </a>
     <ul class="nav-links">
       {links.map(({ href, label }) => (
         <li>
-          <a href={href} class={isActive(href) ? 'active' : ''}>
-            <span class={isActive(href) ? 'marker' : 'marker-empty'} aria-hidden="true">
-              {isActive(href) ? '◇' : ''}
-            </span>{label}
-          </a>
+          <a href={href} class={isActive(href) ? 'active' : ''}>{label}</a>
         </li>
       ))}
     </ul>
+    <span class="nav-divider" aria-hidden="true"></span>
     <SearchDialog />
     <ThemeToggle />
   </nav>

@@ -1,7 +1,8 @@
 export const SITE = {
-  name: '阿帅油',
+  name: '孙小帅',
+  romanName: 'Panionk',
   description: '技术、AI、生活',
-  author: '阿帅油',
+  author: '孙小帅',
   locale: 'zh_CN',
   language: 'zh-cn',
   placeholderUrl: 'https://example.com',
