@@ -1,7 +1,9 @@
 ---
 title: 我做了两个工具，一个 7MB 的壳，一个会记住的壳
 date: '2026-05-05'
-description: 本文分享将7MB的Tauri应用重写为Electron的经历，旨在解决AI对话备份难题，保护用户与ChatGPT等AI的珍贵对话记录。
+description: >-
+  和几个 AI 同时聊是常态，但对话找不回来、账号一封就全没。anyChat 用 7MB 把多 AI 装进一个窗口，AmberKeeper
+  在你正常聊天时把每轮对话悄悄落到本地——两个壳，一个负责切换，一个负责记住。
 tags:
   - Tauri
   - Electron
