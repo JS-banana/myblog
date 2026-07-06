@@ -6,7 +6,7 @@
 
 **Architecture:** Keep `myblog` as the display/deployment repository and keep `posts` as the content source. Add a GitHub Actions workflow in `myblog` that builds the existing Astro app with the canonical production `SITE_URL` and uploads `dist` to GitHub Pages. Do not change `astro.config.mjs`, Vercel config, content sync scripts, or site routing/base behavior.
 
-**Tech Stack:** GitHub Actions, GitHub Pages, Astro, npm, `gh` CLI.
+**Tech Stack:** GitHub Actions, GitHub Pages, Astro, pnpm, `gh` CLI.
 
 ---
 
@@ -49,29 +49,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+
+      - name: Read pnpm version
+        id: pnpm-version
+        run: echo "VERSION=$(node -pe "require('./package.json').packageManager.split('@')[1]")" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ steps.pnpm-version.outputs.VERSION }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '20'
-          cache: npm
+          cache: pnpm
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
         with:
           enablement: true
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build site
-        run: npm run build
+        run: pnpm run build
         env:
           SITE_URL: https://blog.laifuyou.com
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
@@ -84,7 +93,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 ```
 
 Expected: Workflow enables GitHub Pages if needed and publishes `dist` to Pages without changing project config.
@@ -108,7 +117,7 @@ Expected: Commit succeeds.
 
 Run:
 ```bash
-SITE_URL=https://blog.laifuyou.com npm run build
+SITE_URL=https://blog.laifuyou.com pnpm run build
 ```
 
 Expected: Build exits with code 0 and writes `dist/rss.xml`.

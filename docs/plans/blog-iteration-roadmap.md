@@ -47,7 +47,7 @@
 ### 验收标准
 
 - 任意一篇文章都能通过“时间/标签/搜索”至少两种路径被定位到。
-- `npm run build` 仍稳定通过，构建时长变化可接受（记录基线前后对比）。
+- `pnpm build` 仍稳定通过，构建时长变化可接受（记录基线前后对比）。
 - 新增页面在 SEO 头信息上不缺失 canonical / title / description。
 
 ## Later（第 3 阶段：提升单篇阅读体验）
@@ -83,7 +83,7 @@
 ### 验证动作
 
 1. 将抽样文章转换/落入 `src/content/posts`（遵循现有 content contract）。
-2. 执行 `npm run verify`。
+2. 执行 `pnpm verify`。
 3. 人工检查路由：
    - `/`
    - `/page/2`

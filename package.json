@@ -2,12 +2,16 @@
   "name": "blog",
   "type": "module",
   "version": "0.1.0",
+  "packageManager": "pnpm@10.23.0",
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "sharp"]
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && pagefind --site dist --output-subdir pagefind",
     "typecheck": "tsc --noEmit",
     "validate:content": "node scripts/validate-content-contract.mjs",
-    "verify": "npm run typecheck && npm run validate:content && npm run build",
+    "verify": "pnpm typecheck && pnpm validate:content && pnpm build",
     "preview": "astro preview",
     "astro": "astro"
   },

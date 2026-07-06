@@ -38,7 +38,7 @@
 - [ ] 可变品牌名 / site metadata 的改动成本保持较低。
 
 ## 5. Local Verification
-- [ ] `npm run build` 通过。
+- [ ] `pnpm build` 通过。
 - [ ] 如新增本地校验脚本，则脚本本身通过。
 - [ ] 验证结果逐条对照 test spec 的 A-E 记录，而不是只写“build 过了”。
 - [ ] 明确列出所有仍然 deferred 的事项。

@@ -298,7 +298,7 @@ export const collections = { posts };
 
 ### Phase 1: 博客仓库搭建
 1. 归档旧 `JS-banana/blog` 仓库，新建同名仓库
-2. `npm create astro@latest` 初始化
+2. `pnpm create astro@latest` 初始化
 3. 安装依赖：`@astrojs/sitemap`、`@astrojs/rss`
 4. 创建 content.config.ts
 5. 创建 layouts：BaseLayout、PostLayout

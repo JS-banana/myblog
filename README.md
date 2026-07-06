@@ -9,16 +9,16 @@
 ## 开发
 
 ```bash
-npm install
-npm run dev
-npm run build
-npm run preview
+pnpm install
+pnpm dev
+pnpm build
+pnpm preview
 ```
 
 常用校验：
 
 ```bash
-npm run verify
+pnpm verify
 ```
 
 ## 部署
@@ -28,7 +28,7 @@ npm run verify
 - RSS：<https://blog.laifuyou.com/rss.xml>
 - RSS 备用：<https://js-banana.github.io/myblog/rss.xml>
 
-Vercel 负责主站部署，GitHub Pages 作为备用静态出口。GitHub Pages 构建由 `.github/workflows/deploy-pages.yml` 触发。
+Vercel 负责主站部署，GitHub Pages 作为备用静态出口。GitHub Pages 构建由 `.github/workflows/deploy-pages.yml` 触发；PR 校验由 `.github/workflows/verify.yml` 执行 `pnpm verify`。
 
 ## 内容约定
 

@@ -33,7 +33,7 @@
 - 键盘快捷键 `/` 聚焦搜索（可选）
 
 **我们的接入思路**：
-- `npm install pagefind @pagefind/default-ui`
+- `pnpm add pagefind @pagefind/default-ui`
 - 新增 `src/pages/search.astro` 页面
 - `package.json` build 脚本改为 `astro build && pagefind --site dist`
 - Header 中加搜索入口链接

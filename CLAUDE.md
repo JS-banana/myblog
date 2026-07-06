@@ -10,7 +10,7 @@
 
 ## 技术栈
 
-- **框架**：Astro（零 JS 默认输出）
+- **包管理**：pnpm
 - **样式**：纯 CSS 变量，无 Tailwind
 - **部署**：Vercel（Git 集成自动部署）
 - **图片**：Cloudflare R2（统一图床，新文章使用）
@@ -47,10 +47,10 @@ slug 由 AI 从标题自动提取，首次生成后通过 `src/content/.slug-cac
 ## 开发
 
 ```bash
-npm install
-npm run dev      # 本地开发
-npm run build    # 生产构建
-npm run preview  # 预览构建产物
+pnpm install
+pnpm dev      # 本地开发
+pnpm build    # 生产构建
+pnpm preview  # 预览构建产物
 ```
 
 ## 设计规范

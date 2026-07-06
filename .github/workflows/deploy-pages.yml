@@ -21,11 +21,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Read pnpm version
+        id: pnpm-version
+        run: echo "VERSION=$(node -pe "require('./package.json').packageManager.split('@')[1]")" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ steps.pnpm-version.outputs.VERSION }}
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: '20'
-          cache: npm
+          cache: pnpm
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
@@ -33,10 +42,10 @@ jobs:
           enablement: true
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build site
-        run: npm run build
+        run: pnpm run build
         env:
           SITE_URL: https://blog.laifuyou.com
 
