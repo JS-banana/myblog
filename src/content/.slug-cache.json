@@ -55,5 +55,18 @@
       "体验活动",
       "免费资源"
     ]
+  },
+  "wechat/架构没变规模没变，DeepSeekV4Flash正式版凭什么暴涨47分.md": {
+    "slug": "deepseek-v4-flash-benchmark-analysis",
+    "title": "架构没变、规模没变，DeepSeek V4 Flash 正式版凭什么暴涨 47 分？",
+    "year": "2026",
+    "description": "DeepSeek V4 Flash 正式版发布，架构规模不变，benchmark 分数暴涨 47 分。本文分析后训练优化如何带来性能飞跃，并对比国内外 AI 定价策略。",
+    "tags": [
+      "DeepSeek",
+      "AI模型",
+      "后训练",
+      "性能优化",
+      "技术分析"
+    ]
   }
 }
