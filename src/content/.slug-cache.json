@@ -81,5 +81,31 @@
       "飞桨",
       "轻量模型"
     ]
+  },
+  "blog/2026/crouzeix-deep-learn.md": {
+    "slug": "deep-learn-research-skill",
+    "title": "我把金博士使用 GPT 证明 Crouzeix 猜想的方法做成了一个 deep-learn 技能",
+    "year": "2026",
+    "description": "协和医生金山木用 GPT 证明了困扰数学界 22 年的 Crouzeix 猜想。我拆了他那份很短的提示词，做成开源研究技能 deep-learn，写文章前就靠它做研究。",
+    "tags": [
+      "提示词工程",
+      "AI辅助研究",
+      "Crouzeix猜想",
+      "学习方法",
+      "写作流程"
+    ]
+  },
+  "blog/2026/ego-lite.md": {
+    "slug": "ego-lite-ai-agent-browser",
+    "title": "给大家推荐一个特别好用的专为 AI Agent 打造的最快浏览器",
+    "year": "2026",
+    "description": "一个给 Agent 用的最快浏览器 ego lite：保留登录态，Agent 有自己的 Space，不抢你正在用的窗口。走 Skill，任何能跑 Skill 的 Agent 都能接，非多模态模型也能用。",
+    "tags": [
+      "AI Agent",
+      "浏览器",
+      "ego lite",
+      "自动化调试",
+      "开发工具"
+    ]
   }
 }
