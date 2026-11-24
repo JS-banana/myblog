@@ -120,5 +120,18 @@
       "开源",
       "省钱"
     ]
+  },
+  "wechat/Gemini 4 很顺手，但 agy CLI 看不见上下文和额度，我做了个开源状态栏.md": {
+    "slug": "agy-hub-statusline",
+    "title": "Gemini 4 很顺手，但 agy CLI 看不见上下文和额度，我做了个开源状态栏",
+    "year": "2026",
+    "description": "实测 Gemini 4 沟通很舒服，但官方 agy CLI 底部一片空白，上下文和额度全靠盲猜。查到支持 statusline 后，我花半天做了开源状态栏 AGY Hub，还能让 Agent 一句话预览和配置。",
+    "tags": [
+      "Gemini 4",
+      "agy CLI",
+      "开源工具",
+      "状态栏",
+      "AI 模型"
+    ]
   }
 }
